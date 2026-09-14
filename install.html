@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마감요정 설치 안내</title>
+<meta name="description" content="마감요정을 처음 설치하거나 새 버전으로 바꾸는 방법을 그림으로 한 단계씩 보여줍니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#eef2f8; --paper:#ffffff; --ink:#1d2230; --ink-soft:#5d6577; --line:#d5dce8;
+  --accent:#3b82f6; --accent-ink:#1d4ed8; --accent-soft:#dcebfa;
+  --hot:#dc2626; --hot-soft:#fee2e2;
+  --warn-bg:#fdf0c8; --warn-ink:#7a5a00;
+  --win:#f3f4f7; --win-bar:#e4e8ef; --win-ink:#2b3140;
+  --smart:#0a5fb4; --smart-ink:#ffffff;
+  --folder:#f2c14e; --folder-dark:#d9a52e;
+  --desk:#c9d8ee;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121620; --paper:#1b2130; --ink:#e8ecf4; --ink-soft:#a3adc0; --line:#2e3748;
+    --accent:#6aa4ff; --accent-ink:#9cc3ff; --accent-soft:#1f3354;
+    --hot:#ff6b6b; --hot-soft:#3d1e24;
+    --warn-bg:#3a3118; --warn-ink:#f3d27a;
+    --win:#242b3a; --win-bar:#2f3749; --win-ink:#dfe5ef;
+    --smart:#1f6fc4; --smart-ink:#ffffff;
+    --folder:#e0b04a; --folder-dark:#b98a25;
+    --desk:#2a3a55;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121620; --paper:#1b2130; --ink:#e8ecf4; --ink-soft:#a3adc0; --line:#2e3748;
+  --accent:#6aa4ff; --accent-ink:#9cc3ff; --accent-soft:#1f3354;
+  --hot:#ff6b6b; --hot-soft:#3d1e24;
+  --warn-bg:#3a3118; --warn-ink:#f3d27a;
+  --win:#242b3a; --win-bar:#2f3749; --win-ink:#dfe5ef;
+  --smart:#1f6fc4; --smart-ink:#ffffff;
+  --folder:#e0b04a; --folder-dark:#b98a25;
+  --desk:#2a3a55;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+  font-size:18px;line-height:1.7;word-break:keep-all}
+.wrap{max-width:780px;margin:0 auto;padding:40px 20px 80px;display:flex;flex-direction:column;gap:56px}
+h1,h2,.num,.big{font-family:"Jua","Noto Sans KR","Malgun Gothic",sans-serif;font-weight:400;text-wrap:balance}
+header{display:flex;flex-direction:column;gap:14px}
+.tag{align-self:flex-start;font-size:14px;letter-spacing:.04em;color:var(--accent-ink);background:var(--accent-soft);padding:4px 12px;border-radius:999px;font-weight:700}
+h1{font-size:44px;line-height:1.25;margin:0}
+.lead{margin:0;color:var(--ink-soft);max-width:36em}
+.choose{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:8px}
+.choose a{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);background:var(--paper);
+  border:2px solid var(--line);border-radius:16px;padding:20px 22px;transition:border-color .15s, transform .15s}
+.choose a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.choose a:focus-visible,.dl:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.choose .big{font-size:26px;color:var(--accent-ink)}
+.choose span:last-child{color:var(--ink-soft);font-size:16px}
+
+section{display:flex;flex-direction:column;gap:28px}
+h2{font-size:34px;margin:0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2 small{font-family:"Noto Sans KR",sans-serif;font-size:16px;color:var(--ink-soft);font-weight:500}
+.step{display:grid;grid-template-columns:56px 1fr;gap:6px 18px;background:var(--paper);border-radius:20px;padding:24px 24px 26px}
+.num{grid-row:span 3;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:28px;line-height:1}
+.step h3{margin:0;font-size:22px;line-height:1.45;font-weight:700;text-wrap:balance}
+.step p{margin:0;color:var(--ink-soft)}
+.step figure{grid-column:1 / -1;margin:14px 0 0;background:var(--desk);border-radius:14px;padding:14px;overflow-x:auto}
+.step figure svg{display:block;width:100%;min-width:460px;height:auto}
+.hl{color:var(--hot);font-weight:700}
+.key{display:inline-block;padding:0 8px;border:1.5px solid var(--line);border-bottom-width:3px;border-radius:6px;font-size:15px;line-height:1.6;background:var(--ground);color:var(--ink)}
+
+.dl{display:inline-flex;align-items:center;gap:12px;margin-top:10px;align-self:flex-start;text-decoration:none;
+  background:var(--hot);color:#fff;font-family:"Jua",sans-serif;font-size:26px;padding:14px 28px;border-radius:14px;box-shadow:0 6px 0 color-mix(in srgb,var(--hot) 60%,#000)}
+.dl:hover{filter:brightness(1.05)}
+.dl:active{transform:translateY(3px);box-shadow:0 3px 0 color-mix(in srgb,var(--hot) 60%,#000)}
+.dl-meta{font-size:14px;color:var(--ink-soft)}
+.note{grid-column:1 / -1;background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:12px 16px;font-size:16px;margin-top:10px}
+.note b{color:inherit}
+.done{background:var(--accent-soft);border-radius:20px;padding:22px 26px;display:flex;flex-direction:column;gap:6px}
+.done .big{font-size:28px;color:var(--accent-ink)}
+.done p{margin:0}
+
+.faq{display:flex;flex-direction:column;gap:10px}
+details{background:var(--paper);border-radius:14px;padding:4px 20px}
+summary{cursor:pointer;font-weight:700;padding:14px 0;list-style:none;display:flex;gap:10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:"Jua",sans-serif;font-size:24px;color:var(--accent);width:18px}
+details[open] summary::before{content:"−"}
+details p{margin:0 0 16px 28px;color:var(--ink-soft)}
+footer{color:var(--ink-soft);font-size:15px;text-align:center}
+
+/* SVG 그림 공통 */
+.s-win{fill:var(--win)} .s-bar{fill:var(--win-bar)} .s-ink{fill:var(--win-ink)} .s-soft{fill:var(--ink-soft)}
+.s-line{stroke:var(--line);fill:none} .s-paper{fill:var(--paper)}
+.s-acc{fill:var(--accent)} .s-accsoft{fill:var(--accent-soft)}
+.s-hot{stroke:var(--hot);fill:none;stroke-width:4} .s-hotfill{fill:var(--hot)}
+.s-folder{fill:var(--folder)} .s-folderd{fill:var(--folder-dark)}
+.s-smart{fill:var(--smart)} .s-smartink{fill:var(--smart-ink)}
+.s-arrow{stroke:var(--hot);stroke-width:4;fill:none;stroke-dasharray:10 8}
+svg text{font-family:"Noto Sans KR","Malgun Gothic",sans-serif}
+@media (max-width:560px){ h1{font-size:34px} h2{font-size:28px} .step{grid-template-columns:1fr} .num{grid-row:auto} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="tag">마감요정 v1.6</span>
+  <h1>마감요정, 그림 보고 따라 하면 끝나요</h1>
+  <p class="lead">어려운 말은 하나도 몰라도 괜찮아요. 빨간 동그라미가 있는 곳만 누르면 됩니다.</p>
+  <div class="choose">
+    <a href="#install"><span class="big">처음 설치해요</span><span>마감요정을 한 번도 안 써 봤어요 · 5단계</span></a>
+    <a href="#update"><span class="big">새 버전으로 바꿔요</span><span>이미 쓰고 있어요 · 4단계, 목록은 그대로</span></a>
+  </div>
+</header>
+
+<!-- ============ 처음 설치 ============ -->
+<section id="install">
+  <h2>처음 설치하기 <small>5분이면 돼요</small></h2>
+
+  <div class="step">
+    <div class="num">1</div>
+    <h3>아래 빨간 버튼을 누르세요</h3>
+    <p>파일 하나가 내려받아져요. 이름은 <b>deadline-fairy-v1.6.zip</b>이에요. (마감요정의 영어 이름이에요)</p>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <a class="dl" href="https://github.com/hiSOONtory/deadline-fairy-release/releases/download/v1.6/deadline-fairy-v1.6.zip" target="_blank" rel="noopener">⬇ 마감요정 받기</a>
+      <span class="dl-meta">약 52MB · 윈도우 PC용</span>
+    </div>
+    <figure aria-label="브라우저 오른쪽 위에 다운로드 창이 뜨고, 파일 열기를 누르는 그림">
+      <svg viewBox="0 0 560 250" role="img">
+        <rect class="s-win" x="10" y="10" width="540" height="230" rx="10"/>
+        <rect class="s-bar" x="10" y="10" width="540" height="40" rx="10"/>
+        <rect class="s-paper" x="60" y="20" width="300" height="20" rx="10"/>
+        <text class="s-soft" x="74" y="35" font-size="12">github.com</text>
+        <rect class="s-paper" x="270" y="58" width="270" height="130" rx="10" stroke="var(--line)"/>
+        <text class="s-ink" x="288" y="84" font-size="15" font-weight="700">다운로드</text>
+        <rect class="s-accsoft" x="284" y="96" width="242" height="78" rx="8"/>
+        <rect class="s-folder" x="296" y="110" width="30" height="36" rx="4"/>
+        <rect class="s-folderd" x="296" y="122" width="30" height="5"/>
+        <text class="s-ink" x="336" y="124" font-size="13" font-weight="700">deadline-fairy-v1.6.zip</text>
+        <text class="s-acc" x="336" y="152" font-size="14" font-weight="700" text-decoration="underline">파일 열기</text>
+        <ellipse class="s-hot" cx="368" cy="147" rx="46" ry="19"/>
+        <text class="s-soft" x="30" y="90" font-size="14">받기 버튼을 누르면</text>
+        <text class="s-soft" x="30" y="112" font-size="14">여기에 이런 창이 떠요 →</text>
+      </svg>
+    </figure>
+    <div class="note">창이 안 보이면 괜찮아요. <b>파일 탐색기 → 다운로드</b> 폴더에 들어가 있어요.</div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <h3>안에 있는 <span class="hl">마감요정 폴더</span>를 바탕화면으로 끌어다 놓으세요</h3>
+    <p>파일을 열면 노란 폴더가 하나 보여요. 마우스로 꾹 누른 채 바탕화면에 놓으면 돼요.</p>
+    <figure aria-label="압축 파일 창 안의 마감요정 폴더를 바탕화면으로 끌어다 놓는 그림">
+      <svg viewBox="0 0 560 260" role="img">
+        <rect class="s-win" x="10" y="16" width="290" height="226" rx="10"/>
+        <rect class="s-bar" x="10" y="16" width="290" height="36" rx="10"/>
+        <text class="s-ink" x="26" y="40" font-size="13" font-weight="700">deadline-fairy-v1.6.zip</text>
+        <path class="s-folderd" d="M50 88h34l8 10h52v8H50z"/>
+        <rect class="s-folder" x="50" y="98" width="94" height="66" rx="6"/>
+        <text class="s-ink" x="60" y="190" font-size="15" font-weight="700">마감요정</text>
+        <ellipse class="s-hot" cx="97" cy="140" rx="68" ry="64"/>
+        <path class="s-arrow" d="M170 120 C 250 60, 330 70, 392 112"/>
+        <path d="M384 98 L400 116 L378 122" stroke="var(--hot)" stroke-width="4" fill="none"/>
+        <rect x="330" y="16" width="220" height="226" rx="10" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="8 6"/>
+        <text class="s-acc" x="398" y="44" font-size="16" font-weight="700">바탕화면</text>
+        <path class="s-folderd" d="M400 124h26l6 8h40v6h-72z"/>
+        <rect class="s-folder" x="400" y="132" width="72" height="52" rx="5"/>
+        <text class="s-ink" x="406" y="206" font-size="14" font-weight="700">마감요정</text>
+      </svg>
+    </figure>
+    <div class="note"><b>압축 파일 안에서 바로 실행하면 안 돼요.</b> 꼭 바탕화면(또는 문서)으로 꺼낸 다음 실행하세요.</div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <h3>바탕화면의 마감요정 폴더를 열고 <span class="hl">마감요정.exe</span>를 두 번 누르세요</h3>
+    <p>요정 그림이 붙은 파일이에요. 다른 파일은 건드리지 않아도 돼요.</p>
+    <figure aria-label="마감요정 폴더 안에서 마감요정.exe를 두 번 누르는 그림">
+      <svg viewBox="0 0 560 230" role="img">
+        <rect class="s-win" x="10" y="10" width="540" height="210" rx="10"/>
+        <rect class="s-bar" x="10" y="10" width="540" height="38" rx="10"/>
+        <text class="s-ink" x="28" y="35" font-size="13">바탕화면 › 마감요정</text>
+        <path class="s-folderd" d="M36 70h16l4 5h22v4H36z"/><rect class="s-folder" x="36" y="75" width="42" height="26" rx="3"/>
+        <text class="s-ink" x="94" y="94" font-size="15">_internal</text>
+        <text class="s-soft" x="420" y="94" font-size="13">건드리지 마세요</text>
+        <rect class="s-accsoft" x="24" y="114" width="512" height="48" rx="8"/>
+        <circle class="s-acc" cx="57" cy="138" r="17"/>
+        <text x="47" y="144" font-size="17" fill="#fff">✦</text>
+        <text class="s-ink" x="94" y="144" font-size="16" font-weight="700">마감요정.exe</text>
+        <text class="s-hotfill" x="400" y="144" font-size="15" font-weight="700">여기를 두 번 딸깍!</text>
+        <rect class="s-hot" x="20" y="110" width="520" height="56" rx="10"/>
+        <rect class="s-paper" x="40" y="176" width="30" height="34" rx="3" stroke="var(--line)"/>
+        <text class="s-ink" x="94" y="199" font-size="15">읽어주세요.txt</text>
+      </svg>
+    </figure>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <h3>파란 경고 창이 뜨면 <span class="hl">추가 정보</span> → <span class="hl">실행</span></h3>
+    <p>처음 한 번만 떠요. 학교에서 만든 프로그램이라 윈도우가 아직 몰라서 그래요. 위험한 게 아니에요.</p>
+    <figure aria-label="Windows의 PC 보호 창에서 추가 정보를 누르고 실행을 누르는 그림">
+      <svg viewBox="0 0 560 230" role="img">
+        <rect class="s-smart" x="10" y="10" width="262" height="210" rx="6"/>
+        <text class="s-smartink" x="28" y="48" font-size="17" font-weight="700">Windows의 PC 보호</text>
+        <rect class="s-smartink" x="28" y="66" width="200" height="6" rx="3" opacity=".55"/>
+        <rect class="s-smartink" x="28" y="80" width="170" height="6" rx="3" opacity=".55"/>
+        <text class="s-smartink" x="28" y="120" font-size="15" text-decoration="underline" font-weight="700">추가 정보</text>
+        <ellipse class="s-hot" cx="62" cy="115" rx="50" ry="20"/>
+        <text class="s-hotfill" x="120" y="121" font-size="22" font-weight="700">①</text>
+        <rect x="150" y="178" width="106" height="30" rx="3" fill="none" stroke="#fff"/>
+        <text class="s-smartink" x="172" y="198" font-size="13">실행 안 함</text>
+
+        <path d="M280 115 h14" stroke="var(--hot)" stroke-width="4"/>
+        <path d="M290 107 l8 8 l-8 8" stroke="var(--hot)" stroke-width="4" fill="none"/>
+
+        <rect class="s-smart" x="304" y="10" width="246" height="210" rx="6"/>
+        <text class="s-smartink" x="322" y="48" font-size="17" font-weight="700">Windows의 PC 보호</text>
+        <text class="s-smartink" x="322" y="84" font-size="12">앱: 마감요정.exe</text>
+        <text class="s-smartink" x="322" y="104" font-size="12">게시자: 알 수 없음</text>
+        <rect x="322" y="176" width="92" height="32" rx="3" fill="#fff"/>
+        <text x="352" y="197" font-size="14" font-weight="700" fill="#0a5fb4">실행</text>
+        <rect x="424" y="176" width="110" height="32" rx="3" fill="none" stroke="#fff"/>
+        <text class="s-smartink" x="446" y="197" font-size="13">실행 안 함</text>
+        <rect class="s-hot" x="314" y="168" width="108" height="48" rx="8"/>
+        <text class="s-hotfill" x="352" y="160" font-size="22" font-weight="700">②</text>
+      </svg>
+    </figure>
+    <div class="note">"게시자: 알 수 없음"이라고 나와도 괜찮아요. <b>실행</b>을 누르세요.</div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <h3>화면 오른쪽에 마감요정이 나타나면 성공!</h3>
+    <p>이제 브리티에서 쪽지를 <b>열어서 읽기만</b> 하면, "~까지 제출"이 적힌 쪽지가 알아서 목록에 들어와요.</p>
+    <figure aria-label="바탕화면 오른쪽에 마감요정 창이 떠 있는 그림">
+      <svg viewBox="0 0 560 250" role="img">
+        <rect x="10" y="10" width="540" height="230" rx="10" fill="var(--desk)" stroke="var(--line)"/>
+        <rect class="s-bar" x="10" y="208" width="540" height="32" rx="0"/>
+        <circle class="s-acc" cx="512" cy="224" r="8"/>
+        <rect class="s-paper" x="330" y="22" width="206" height="178" rx="10"/>
+        <text class="s-ink" x="344" y="48" font-size="15" font-weight="700">마감요정</text>
+        <rect class="s-accsoft" x="470" y="34" width="20" height="20" rx="5"/><rect class="s-accsoft" x="494" y="34" width="20" height="20" rx="5"/>
+        <text x="497" y="49" font-size="11">🚀</text>
+        <ellipse class="s-hot" cx="504" cy="44" rx="17" ry="16"/>
+        <rect x="344" y="66" width="178" height="52" rx="8" fill="var(--hot-soft)" stroke="var(--hot)" stroke-width="1.5"/>
+        <rect x="354" y="76" width="46" height="16" rx="4" fill="var(--hot)"/><text x="358" y="88" font-size="10" fill="#fff" font-weight="700">D-DAY</text>
+        <rect class="s-soft" x="354" y="100" width="130" height="6" rx="3" opacity=".5"/>
+        <rect class="s-win" x="344" y="126" width="178" height="52" rx="8"/>
+        <rect class="s-accsoft" x="354" y="136" width="34" height="16" rx="4"/><text class="s-acc" x="359" y="148" font-size="10" font-weight="700">D-3</text>
+        <rect class="s-soft" x="354" y="160" width="110" height="6" rx="3" opacity=".5"/>
+        <text class="s-ink" x="36" y="92" font-size="15" font-weight="700">🚀 를 눌러 두면</text>
+        <text class="s-ink" x="36" y="116" font-size="15">컴퓨터를 켤 때마다</text>
+        <text class="s-ink" x="36" y="140" font-size="15">마감요정도 같이 켜져요</text>
+        <path class="s-arrow" d="M210 110 C 330 110, 420 70, 484 50"/>
+      </svg>
+    </figure>
+  </div>
+
+  <div class="done">
+    <span class="big">설치 끝 🎉</span>
+    <p>창을 닫아도 꺼지지 않아요. 작업표시줄 오른쪽 요정 아이콘을 누르면 다시 열려요.</p>
+  </div>
+</section>
+
+<!-- ============ 업데이트 ============ -->
+<section id="update">
+  <h2>새 버전으로 바꾸기 <small>마감 목록·할 일은 그대로 남아요</small></h2>
+
+  <div class="step">
+    <div class="num">1</div>
+    <h3>켜져 있는 마감요정을 먼저 <span class="hl">종료</span>하세요</h3>
+    <p>작업표시줄 오른쪽 <span class="key">^</span> 를 누르고 → 요정 아이콘을 <b>오른쪽 버튼</b>으로 누르고 → <b>마감요정 종료</b>.</p>
+    <figure aria-label="작업표시줄 숨은 아이콘에서 요정 아이콘을 오른쪽 클릭해 마감요정 종료를 누르는 그림">
+      <svg viewBox="0 0 560 250" role="img">
+        <rect x="10" y="10" width="540" height="230" rx="10" fill="var(--desk)"/>
+        <rect class="s-bar" x="10" y="200" width="540" height="40"/>
+        <text class="s-ink" x="392" y="226" font-size="18" font-weight="700">^</text>
+        <ellipse class="s-hot" cx="397" cy="220" rx="18" ry="16"/>
+        <text class="s-hotfill" x="360" y="226" font-size="18" font-weight="700">①</text>
+        <text class="s-ink" x="470" y="226" font-size="13">오후 3:20</text>
+        <rect class="s-paper" x="340" y="136" width="110" height="52" rx="8" stroke="var(--line)"/>
+        <circle class="s-acc" cx="364" cy="162" r="13"/><text x="357" y="167" font-size="13" fill="#fff">✦</text>
+        <ellipse class="s-hot" cx="364" cy="162" rx="20" ry="20"/>
+        <text class="s-hotfill" x="392" y="170" font-size="14" font-weight="700">② 우클릭</text>
+        <rect class="s-paper" x="120" y="30" width="210" height="130" rx="8" stroke="var(--line)"/>
+        <text class="s-ink" x="138" y="62" font-size="14">위젯 열기</text>
+        <text class="s-ink" x="138" y="92" font-size="14">컴퓨터 켜면 자동 시작</text>
+        <line x1="130" y1="108" x2="320" y2="108" stroke="var(--line)"/>
+        <rect x="128" y="118" width="194" height="32" rx="6" fill="var(--hot-soft)"/>
+        <text class="s-hotfill" x="138" y="140" font-size="15" font-weight="700">마감요정 종료</text>
+        <text class="s-hotfill" x="286" y="141" font-size="16" font-weight="700">③</text>
+      </svg>
+    </figure>
+    <div class="note">왜 꺼야 하나요? 켜져 있으면 파일을 바꿀 수가 없어서예요.</div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <h3>새 파일을 받으세요</h3>
+    <p>처음 설치할 때와 똑같아요. 이 버튼을 누르면 돼요.</p>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <a class="dl" href="https://github.com/hiSOONtory/deadline-fairy-release/releases/download/v1.6/deadline-fairy-v1.6.zip" target="_blank" rel="noopener">⬇ 새 마감요정 받기</a>
+      <span class="dl-meta">deadline-fairy-v1.6.zip · 약 52MB</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <h3>새 마감요정 폴더를 <span class="hl">원래 있던 곳</span>에 끌어다 놓고 → <span class="hl">바꾸기</span></h3>
+    <p>보통은 바탕화면이에요. "파일 바꾸기" 창이 뜨면 <b>대상에 있는 파일 바꾸기</b>를 누르세요.</p>
+    <figure aria-label="파일 바꾸기 또는 건너뛰기 창에서 대상에 있는 파일 바꾸기를 누르는 그림">
+      <svg viewBox="0 0 560 240" role="img">
+        <rect class="s-paper" x="70" y="12" width="420" height="216" rx="10" stroke="var(--line)"/>
+        <text class="s-ink" x="94" y="48" font-size="17" font-weight="700">파일 바꾸기 또는 건너뛰기</text>
+        <text class="s-soft" x="94" y="74" font-size="13">대상에 이름이 같은 파일이 있습니다</text>
+        <rect x="88" y="92" width="384" height="44" rx="8" fill="var(--hot-soft)"/>
+        <text class="s-hotfill" x="104" y="120" font-size="16" font-weight="700">✓  대상에 있는 파일 바꾸기</text>
+        <rect class="s-hot" x="84" y="88" width="392" height="52" rx="10"/>
+        <text class="s-ink" x="104" y="170" font-size="15">↷  파일 건너뛰기</text>
+        <text class="s-ink" x="104" y="206" font-size="15">☰  각 파일에 대해 결정</text>
+      </svg>
+    </figure>
+    <div class="note"><b>걱정 마세요.</b> 마감 목록·할 일·휴지통·설정 파일은 새 파일에 들어 있지 않아서 지워지지 않아요.</div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <h3>마감요정.exe를 다시 두 번 누르세요</h3>
+    <p>작업표시줄의 요정 아이콘에 마우스를 올렸을 때 <b>마감요정 v1.6</b>이라고 나오면 업데이트 끝이에요.</p>
+  </div>
+</section>
+
+<!-- ============ 막혔을 때 ============ -->
+<section id="help">
+  <h2>막혔을 때</h2>
+  <div class="faq">
+    <details><summary>받기 버튼을 눌렀는데 "일반적으로 다운로드되지 않습니다"라고 떠요</summary>
+      <p>파일 이름 옆 <b>…</b> 을 누르고 → <b>유지</b> → <b>그래도 계속</b>을 누르세요. 새 프로그램이라 브라우저가 한 번 물어보는 거예요.</p></details>
+    <details><summary>받기 버튼을 눌렀더니 "404"나 GitHub 로그인 화면이 나와요</summary>
+      <p>파일을 올린 선생님께 알려 주세요. 파일을 받을 수 있는 상태가 아니라는 뜻이에요. 로그인은 하지 않아도 돼요.</p></details>
+    <details><summary>받은 파일이 어디 있는지 모르겠어요</summary>
+      <p>키보드의 <span class="key">⊞ Windows</span> + <span class="key">E</span> 를 같이 누르면 파일 탐색기가 열려요. 왼쪽에서 <b>다운로드</b>를 누르면 있어요.</p></details>
+    <details><summary>실행했는데 아무것도 안 떠요</summary>
+      <p>이미 켜져 있을 수 있어요. 작업표시줄 오른쪽 <span class="key">^</span> 안의 요정 아이콘을 눌러 보세요. 그래도 안 되면 폴더를 <b>C:\Program Files</b>가 아닌 <b>바탕화면</b>에 두었는지 확인하세요.</p></details>
+    <details><summary>쪽지가 목록에 안 들어와요</summary>
+      <p>쪽지를 <b>직접 열어서</b> 읽어야 들어와요. 그리고 "9월 18일까지 제출"처럼 날짜와 할 일이 같이 있어야 해요. 내가 보내는 쪽지는 보내는 순간 들어와요.</p></details>
+    <details><summary>구글 캘린더랑 연결하고 싶어요</summary>
+      <p>안 해도 다른 기능은 다 돼요. 원하시면 마감요정 폴더 안의 <b>읽어주세요.txt</b> [3]번에 방법이 있어요.</p></details>
+  </div>
+</section>
+
+<footer>마감요정 v1.6 · 문제가 계속되면 마감요정 폴더 안의 <b>debug.log</b> 파일을 보내 주세요</footer>
+</div>
+
+</html>

@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마감요정 기능 그림책</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#eef2f8; --paper:#ffffff; --ink:#1d2230; --ink-soft:#5d6577; --line:#d5dce8;
+  --accent:#3b82f6; --accent-ink:#1d4ed8; --accent-soft:#dcebfa;
+  --hot:#dc2626; --hot-soft:#fee2e2; --over:#c0392b; --over-soft:#fbdada;
+  --warn:#a67c00; --warn-soft:#fdf0c8;
+  --mute:#8a8d99; --mute-soft:#eceef2;
+  --chip:#f3f4f6; --chip-hover:#e5e7eb;
+  --w-ground:#ffffff; --w-ink:#22232b; --w-soft:#9ca3af; --w-line:#e5e7eb;
+  --pin:#111827; --pin-ink:#ffffff;
+  --dark-bar:#1f2937; --dark-bar-ink:#f9fafb; --dark-bar-link:#93c5fd;
+  --good:#15803d; --good-soft:#dcfce7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121620; --paper:#1b2130; --ink:#e8ecf4; --ink-soft:#a3adc0; --line:#2e3748;
+    --accent:#6aa4ff; --accent-ink:#9cc3ff; --accent-soft:#1f3354;
+    --hot:#ff6b6b; --hot-soft:#3d1e24; --over:#ff8a80; --over-soft:#3a2024;
+    --warn:#f3d27a; --warn-soft:#3a3118;
+    --mute:#aab0bf; --mute-soft:#2a3040;
+    --chip:#262d3c; --chip-hover:#2f3749;
+    --w-ground:#1f2533; --w-ink:#e5e9f2; --w-soft:#8f98ab; --w-line:#323a4c;
+    --pin:#f2c14e; --pin-ink:#1b2130;
+    --dark-bar:#0d1119; --dark-bar-ink:#f9fafb; --dark-bar-link:#93c5fd;
+    --good:#6ee7a0; --good-soft:#173826;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121620; --paper:#1b2130; --ink:#e8ecf4; --ink-soft:#a3adc0; --line:#2e3748;
+  --accent:#6aa4ff; --accent-ink:#9cc3ff; --accent-soft:#1f3354;
+  --hot:#ff6b6b; --hot-soft:#3d1e24; --over:#ff8a80; --over-soft:#3a2024;
+  --warn:#f3d27a; --warn-soft:#3a3118;
+  --mute:#aab0bf; --mute-soft:#2a3040;
+  --chip:#262d3c; --chip-hover:#2f3749;
+  --w-ground:#1f2533; --w-ink:#e5e9f2; --w-soft:#8f98ab; --w-line:#323a4c;
+  --pin:#f2c14e; --pin-ink:#1b2130;
+  --dark-bar:#0d1119; --dark-bar-ink:#f9fafb; --dark-bar-link:#93c5fd;
+  --good:#6ee7a0; --good-soft:#173826;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic","맑은 고딕",system-ui,sans-serif;font-size:18px;line-height:1.7;word-break:keep-all}
+.wrap{max-width:900px;margin:0 auto;padding:40px 20px 80px;display:flex;flex-direction:column;gap:64px}
+h1,h2,.jua{font-family:"Jua","Noto Sans KR","Malgun Gothic",sans-serif;font-weight:400;text-wrap:balance}
+h1{font-size:44px;line-height:1.25;margin:0}
+h2{font-size:32px;line-height:1.3;margin:0}
+.lead{margin:0;color:var(--ink-soft)}
+.tag{align-self:flex-start;font-size:14px;letter-spacing:.04em;color:var(--accent-ink);background:var(--accent-soft);padding:4px 12px;border-radius:999px;font-weight:700}
+header,section{display:flex;flex-direction:column;gap:20px}
+.sub{margin:-8px 0 0;color:var(--ink-soft)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* ---------- 위젯 모형 ---------- */
+.w{position:relative;background:var(--w-ground);color:var(--w-ink);border:1px solid var(--w-line);border-radius:14px;
+  box-shadow:0 18px 40px -18px rgba(20,30,60,.35);padding:16px 16px 14px;width:100%;max-width:400px;
+  font-family:"Malgun Gothic","맑은 고딕","Noto Sans KR",sans-serif;font-size:14px;line-height:1.45;display:flex;flex-direction:column;gap:10px}
+.w-head{display:flex;align-items:center;gap:4px}
+.w-title{font-weight:700;font-size:18px;margin-right:auto}
+.hb{width:30px;height:30px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-size:15px}
+.hb.on{background:var(--accent-soft)}
+.w-count{color:var(--w-soft);font-size:12px;margin-left:4px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tab{height:34px;border-radius:8px;background:var(--chip);color:var(--w-soft);font-weight:700;display:grid;place-items:center;font-size:13px}
+.tab.on{background:var(--accent);color:#fff}
+.list{display:flex;flex-direction:column;gap:8px}
+.card{border:1px solid var(--w-line);border-radius:10px;padding:8px 12px;display:flex;flex-direction:column;gap:2px;background:var(--w-ground)}
+.card.today{border:2px solid var(--hot);background:var(--hot-soft)}
+.card.done{opacity:.6}
+.c-top{display:flex;align-items:center;gap:6px}
+.chk{color:var(--w-soft);font-size:16px;width:14px}
+.chk.on{color:var(--accent)}
+.badge{font-weight:700;font-size:11px;padding:1px 6px;border-radius:4px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.b-day{background:var(--hot-soft);color:var(--hot)}
+.card.today .b-day{background:var(--paper)}
+.b-near{background:var(--warn-soft);color:var(--warn)}
+.b-far{background:var(--accent-soft);color:var(--accent-ink)}
+.b-over{background:var(--over-soft);color:var(--over)}
+.b-none{background:var(--mute-soft);color:var(--mute)}
+.phrase{color:var(--w-soft);font-size:11px;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic{color:var(--w-soft);font-size:13px;padding:0 2px}
+.c-title{font-weight:700;margin-left:20px}
+.card.done .c-title{color:var(--w-soft)}
+.c-from{font-size:11px;color:var(--w-soft);margin-left:20px}
+.c-cal{font-size:11px;color:var(--accent-ink);margin-left:20px}
+.undo{background:var(--dark-bar);color:var(--dark-bar-ink);border-radius:10px;padding:6px 8px 6px 14px;display:flex;align-items:center;font-size:13px}
+.undo b{margin-left:auto;color:var(--dark-bar-link);padding:2px 8px}
+.input{display:flex;gap:8px}
+.input .box{flex:1;height:38px;border:1px solid var(--line);border-radius:8px;padding:0 12px;display:flex;align-items:center;color:var(--w-soft);font-size:13px;background:var(--w-ground)}
+.input .box.typed{color:var(--w-ink);border:1.5px solid var(--accent)}
+.input .add{width:60px;height:38px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center}
+
+/* 번호 핀 */
+.pin{position:absolute;width:28px;height:28px;border-radius:50%;background:var(--pin);color:var(--pin-ink);
+  font-family:"Jua",sans-serif;font-size:17px;display:grid;place-items:center;box-shadow:0 0 0 3px var(--w-ground);z-index:2;font-variant-numeric:tabular-nums}
+
+/* 한눈에 보기 */
+.map{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:36px;align-items:start}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.legend li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.legend .n{width:30px;height:30px;border-radius:50%;background:var(--pin);color:var(--pin-ink);font-family:"Jua",sans-serif;font-size:18px;display:grid;place-items:center}
+.legend b{display:block;font-size:19px}
+.legend span{color:var(--ink-soft);font-size:16px}
+
+/* 공통 판 */
+.panel{background:var(--paper);border-radius:20px;padding:26px}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:center}
+.arrow{font-family:"Jua",sans-serif;font-size:34px;color:var(--accent)}
+.frame{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+.frame .cap{font-weight:700}
+.frame .cap small{display:block;font-weight:400;color:var(--ink-soft);font-size:15px}
+.note-win{width:100%;background:var(--w-ground);border:1px solid var(--w-line);border-radius:10px;overflow:hidden;font-size:12px;text-align:left;color:var(--w-ink);font-family:"Malgun Gothic","Noto Sans KR",sans-serif}
+.note-win .bar{background:var(--chip);padding:5px 10px;font-weight:700;display:flex;gap:6px;align-items:center}
+.note-win .body{padding:10px;display:flex;flex-direction:column;gap:6px;line-height:1.5}
+.mark{background:var(--warn-soft);color:var(--ink);border-radius:3px;padding:0 3px;font-weight:700;box-shadow:inset 0 -2px 0 var(--warn)}
+.mini{width:100%;max-width:230px}
+.fairy{font-size:54px;line-height:1}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--good-soft);color:var(--good);border-radius:999px;padding:4px 14px;font-size:16px;font-weight:500;white-space:nowrap}
+.chip.no{background:var(--hot-soft);color:var(--hot);text-decoration:line-through;text-decoration-thickness:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.two h3{margin:0 0 10px;font-size:19px;display:flex;align-items:center;gap:8px}
+
+/* D-day 줄 */
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.scale div{background:var(--paper);border-radius:16px;padding:18px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.scale .badge{font-size:20px;padding:4px 12px;border-radius:8px}
+.scale span{font-size:15px;color:var(--ink-soft);line-height:1.4}
+
+/* 카드 만지기 */
+.touch{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.touch > div{background:var(--paper);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.big-ic{font-family:"Jua",sans-serif;font-size:40px;line-height:1;width:64px;height:64px;border-radius:16px;background:var(--chip);display:grid;place-items:center;color:var(--ink)}
+.touch b{font-size:20px}
+.touch p{margin:0;color:var(--ink-soft);font-size:16px}
+
+.rescue{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center}
+.rescue .frame{background:var(--paper);border-radius:18px;padding:18px}
+.clock{font-family:"Jua",sans-serif;font-size:40px;color:var(--hot);line-height:1;font-variant-numeric:tabular-nums}
+
+.btns{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.btns div{background:var(--paper);border-radius:18px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.btns .hb{width:58px;height:58px;font-size:30px;border-radius:14px}
+.btns b{font-size:18px}
+.btns span{color:var(--ink-soft);font-size:15px;line-height:1.45}
+
+.toast{background:var(--w-ground);border:1px solid var(--w-line);border-left:6px solid var(--accent);border-radius:10px;padding:14px 18px;max-width:380px;display:flex;flex-direction:column;gap:4px;box-shadow:0 12px 30px -16px rgba(20,30,60,.4);font-family:"Malgun Gothic","Noto Sans KR",sans-serif}
+.toast small{color:var(--w-soft);font-size:12px}
+.toast b{font-size:16px;color:var(--w-ink)}
+.toast span{font-size:13px;color:var(--w-ink)}
+.tray{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.kbd{display:inline-block;padding:0 10px;border:1.5px solid var(--line);border-bottom-width:4px;border-radius:8px;font-size:17px;background:var(--paper);color:var(--ink);font-weight:700}
+.sidebyside{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.sidebyside .panel{display:flex;flex-direction:column;gap:14px}
+.sidebyside h3{margin:0;font-size:22px}
+.sidebyside p{margin:0;color:var(--ink-soft);font-size:16px}
+.today-row{display:flex;align-items:center;gap:6px;font-size:14px}
+.carry{font-weight:700;font-size:12px}
+.carry.a{color:var(--warn)} .carry.b{color:var(--hot)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:11px;text-align:center}
+.week div{padding:6px 2px;border-radius:8px;display:flex;flex-direction:column;gap:3px;color:var(--w-soft)}
+.week b{color:var(--w-ink);font-size:12px}
+.week .now{border:1px solid var(--accent);background:var(--accent-soft)}
+.week .now b{color:var(--accent-ink)}
+.opt{font-size:13px;color:var(--ink-soft);background:var(--chip);border-radius:999px;padding:2px 10px;align-self:flex-start}
+footer{color:var(--ink-soft);font-size:15px;text-align:center}
+
+@media (max-width:760px){
+  h1{font-size:34px} h2{font-size:27px}
+  .map,.two,.sidebyside{grid-template-columns:1fr}
+  .flow,.rescue{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg);justify-self:center}
+  .scale{grid-template-columns:repeat(2,1fr)}
+  .touch{grid-template-columns:1fr}
+  .btns{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="tag">마감요정 v1.6 · 기능 설명서</span>
+  <h1>마감요정은 이렇게 생겼어요</h1>
+  <p class="lead">번호를 따라 하나씩 보면 돼요. 외울 건 없어요.</p>
+</header>
+
+<!-- ============ 한눈에 ============ -->
+<section>
+  <div class="map">
+    <div class="w" aria-label="마감요정 창 모형">
+      <span class="pin" style="left:-12px;top:14px">1</span>
+      <div class="w-head">
+        <span class="w-title">마감요정🧚‍♀️</span>
+        <span class="hb">🗑</span><span class="hb">🔔</span><span class="hb">📍</span><span class="hb on">🚀</span>
+        <span class="w-count">3건</span>
+      </div>
+      <span class="pin" style="left:-12px;top:60px">2</span>
+      <div class="tabs"><span class="tab on">🔔 마감</span><span class="tab">📋 할일</span><span class="tab">📅 이번주</span><span class="tab">전체</span></div>
+      <div class="list">
+        <div class="card today" style="position:relative">
+          <span class="pin" style="left:-28px;top:6px">3</span>
+          <div class="c-top"><span class="chk">○</span><span class="badge b-day">D-DAY</span><span class="phrase">오늘 오후 3시까지</span><span class="ic">✎</span><span class="ic">✕</span></div>
+          <div class="c-title">2학기 방과후 수요조사 회신</div>
+          <div class="c-from">교무기획부 · 김OO</div>
+          <div class="c-cal">📅 캘린더에 등록</div>
+        </div>
+        <div class="card" style="position:relative">
+          <div class="c-top"><span class="chk">○</span><span class="badge b-near">D-2</span><span class="phrase">9. 16.(수)까지</span><span class="ic">✎</span><span class="ic">✕</span></div>
+          <div class="c-title">수행평가 채점 기준표 제출</div>
+          <div class="c-from">📤 내가 보낸 쪽지 · 수신 1학년 담임 외 9</div>
+        </div>
+        <div class="card" style="position:relative">
+          <div class="c-top"><span class="chk">○</span><span class="badge b-far">D-6</span><span class="phrase">9월 20일까지</span><span class="ic">✎</span><span class="ic">✕</span></div>
+          <div class="c-title">생기부 점검</div>
+          <div class="c-from">직접 등록</div>
+        </div>
+        <div class="card done">
+          <div class="c-top"><span class="chk on">●</span><span class="badge b-far">D-9</span><span class="phrase">9/23까지</span><span class="ic">✎</span><span class="ic">✕</span></div>
+          <div class="c-title">현장체험학습 명단</div>
+        </div>
+      </div>
+      <span class="pin" style="left:-12px;bottom:14px">4</span>
+      <div class="input"><span class="box">마감 일정 직접 등록 후 Enter...</span><span class="add">추가</span></div>
+    </div>
+
+    <ol class="legend">
+      <li><span class="n">1</span><div><b>머리글 버튼 4개</b><span>휴지통 · 알림 · 항상 위 · 자동 시작</span></div></li>
+      <li><span class="n">2</span><div><b>탭</b><span>마감 / 오늘 할 일 / 이번 주 / 전체를 골라 봐요</span></div></li>
+      <li><span class="n">3</span><div><b>마감 카드</b><span>쪽지 한 통 = 카드 한 장. 급한 것부터 위에 쌓여요</span></div></li>
+      <li><span class="n">4</span><div><b>입력칸</b><span>쪽지 말고 내가 직접 마감을 적을 때</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 쪽지 자동 등록 ============ -->
+<section>
+  <h2>쪽지를 열면 알아서 들어와요</h2>
+  <p class="sub">브리티에서 쪽지를 <b>열어서 읽기만</b> 하면 끝이에요.</p>
+  <div class="panel">
+    <div class="flow">
+      <div class="frame">
+        <div class="note-win mini">
+          <div class="bar">✉ 쪽지</div>
+          <div class="body">
+            <b>방과후 수요조사 회신</b>
+            <span>담임 선생님께서는 <span class="mark">오늘 오후 3시까지</span> 회신해 주세요.</span>
+          </div>
+        </div>
+        <span class="cap">① 쪽지를 열어요</span>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="frame">
+        <div class="fairy" aria-hidden="true">🧚‍♀️</div>
+        <span class="cap">② 요정이 날짜를 찾아요<small>"~까지" + "회신·제출" 같은 말</small></span>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="frame">
+        <div class="card today mini" style="text-align:left;font-size:13px;font-family:'Malgun Gothic','Noto Sans KR',sans-serif;color:var(--w-ink)">
+          <div class="c-top"><span class="chk">○</span><span class="badge b-day">D-DAY</span></div>
+          <div class="c-title">방과후 수요조사 회신</div>
+        </div>
+        <span class="cap">③ 카드가 생겨요</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h3>✅ 이런 날짜는 알아봐요</h3>
+      <div class="chips">
+        <span class="chip">9월 18일까지</span><span class="chip">9/18까지</span><span class="chip">2026. 9. 18.(금)까지</span>
+        <span class="chip">15일까지</span><span class="chip">내일 오후 3시까지</span><span class="chip">금요일까지</span>
+        <span class="chip">다음 주 월요일까지</span><span class="chip">기한: 9월 12일</span><span class="chip">지금 바로 제출</span>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>🚫 이런 건 안 넣어요</h3>
+      <div class="chips">
+        <span class="chip no">지금까지 제출해 주셔서 감사</span><span class="chip no">마감되었습니다</span>
+        <span class="chip no">기한이 지났습니다</span><span class="chip no">날짜만 있는 행사 안내</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel sidebyside" style="grid-template-columns:auto 1fr;align-items:center;display:grid">
+    <div class="fairy" aria-hidden="true">📤</div>
+    <div><b style="font-size:20px">내가 보내는 쪽지도 들어와요</b><br><span style="color:var(--ink-soft);font-size:16px">"9/15까지 내 주세요"라고 쓰고 <b>보내기</b>를 누르면 바로 카드가 생겨요. 걷어야 할 것도 안 잊어요.</span></div>
+  </div>
+</section>
+
+<!-- ============ D-day 색 ============ -->
+<section>
+  <h2>색깔만 봐도 급한 정도를 알아요</h2>
+  <div class="scale">
+    <div><span class="badge b-over">D+2</span><span>기한이<br>지났어요</span></div>
+    <div><span class="badge b-day">D-DAY</span><span>오늘까지!<br>빨간 테두리</span></div>
+    <div><span class="badge b-near">D-2</span><span>이틀<br>안 남았어요</span></div>
+    <div><span class="badge b-far">D-6</span><span>아직<br>여유 있어요</span></div>
+    <div><span class="badge b-none">기한없음</span><span>날짜를<br>못 찾았어요</span></div>
+  </div>
+</section>
+
+<!-- ============ 카드 만지기 ============ -->
+<section>
+  <h2>카드에서 누를 수 있는 것</h2>
+  <div class="touch">
+    <div><span class="big-ic">○</span><b>끝냈어요</b><p>누르면 ● 로 바뀌고 흐려져요. 한 번 더 누르면 되돌아와요.</p></div>
+    <div><span class="big-ic">✎</span><b>고칠래요</b><p>날짜가 틀리게 잡혔으면 달력에서 다시 골라요. 제목도 고칠 수 있어요.</p></div>
+    <div><span class="big-ic">✕</span><b>지울래요</b><p>진짜로 사라지지 않아요. 휴지통으로 가요. ↓</p></div>
+  </div>
+
+  <div class="rescue">
+    <div class="frame">
+      <div class="undo mini" style="width:100%"><span>🗑 '생기부 점검' 지웠어요</span><b>되돌리기</b></div>
+      <span class="cap">잘못 지웠다!<small>아래에 뜬 <b>되돌리기</b>를 눌러요</small></span>
+    </div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="frame">
+      <span class="clock">8초</span>
+      <span class="cap">놓쳤다면?<small>띠는 8초 뒤에 사라져요</small></span>
+    </div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div class="frame">
+      <span class="big-ic" style="background:var(--chip)">🗑</span>
+      <span class="cap">휴지통에서 되살려요<small><b>30일</b> 동안 보관돼요</small></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 직접 등록 ============ -->
+<section>
+  <h2>쪽지 말고, 직접 적어도 돼요</h2>
+  <div class="panel" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+    <div class="input" style="width:100%;max-width:520px"><span class="box typed">9월 20일까지 생기부 점검</span><span class="add">추가</span></div>
+    <p style="margin:0;color:var(--ink-soft)">날짜가 들어 있으면 D-day가 붙어요. <span class="kbd">Enter</span> 를 눌러도 들어가요.</p>
+  </div>
+</section>
+
+<!-- ============ 할일 / 이번주 ============ -->
+<section>
+  <h2>다른 탭에는 뭐가 있나요</h2>
+  <div class="sidebyside">
+    <div class="panel">
+      <h3>📋 할일</h3>
+      <div class="w" style="max-width:none;box-shadow:none;gap:8px">
+        <div class="today-row"><span class="chk">○</span><span class="carry b">↗3</span><span>학급 게시판 정리</span></div>
+        <div class="today-row"><span class="chk">○</span><span class="carry a">↗1</span><span>상담 일지 쓰기</span></div>
+        <div class="today-row"><span class="chk">○</span><span>프린트 30장 복사</span></div>
+        <div class="today-row" style="color:var(--w-soft)"><span class="chk on">●</span><span>출석부 확인</span></div>
+      </div>
+      <p>오늘 할 일을 적는 메모장이에요. 못 끝내면 다음 날로 넘어가고 <b style="color:var(--warn)">↗</b> 숫자가 하나씩 늘어요.</p>
+    </div>
+    <div class="panel">
+      <h3>📅 이번주 <span class="opt">구글 연결한 경우</span></h3>
+      <div class="w" style="max-width:none;box-shadow:none">
+        <div class="week">
+          <div><b>월<br>14</b>-</div><div class="now"><b>화<br>15</b>교과협의</div><div><b>수<br>16</b>채점…</div>
+          <div><b>목<br>17</b>-</div><div><b>금<br>18</b>체험…<span style="color:var(--accent)">+1</span></div><div><b>토<br>19</b>-</div><div><b>일<br>20</b>-</div>
+        </div>
+      </div>
+      <p>내 구글 캘린더 일정을 한 주 단위로 보여 줘요. 카드의 <b>📅 캘린더에 등록</b>을 누르면 마감이 캘린더에도 들어가요(당일 9시·전날 17시 알림).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 머리글 버튼 ============ -->
+<section>
+  <h2>위쪽 버튼 4개</h2>
+  <p class="sub">켜져 있으면 버튼 바탕이 <b style="color:var(--accent-ink)">파랗게</b> 바뀌어요.</p>
+  <div class="btns">
+    <div><span class="hb">🗑</span><b>휴지통</b><span>지운 것 되살리기</span></div>
+    <div><span class="hb">🔔</span><b>켤 때 알림</b><span>누르면 🔕 로 꺼져요</span></div>
+    <div><span class="hb on">📌</span><b>항상 위</b><span>다른 창에 안 가려져요</span></div>
+    <div><span class="hb on">🚀</span><b>자동 시작</b><span>컴퓨터 켜면 같이 켜져요</span></div>
+  </div>
+</section>
+
+<!-- ============ 알림 / 트레이 ============ -->
+<section>
+  <h2>켤 때 오늘 마감을 알려 줘요</h2>
+  <div class="panel" style="display:flex;flex-direction:column;gap:18px">
+    <div class="toast" role="img" aria-label="알림 예시">
+      <small>🧚 오늘 마감 1건!</small>
+      <b>마감요정이 날아옵니다~ 서두르세요! 🏃💨</b>
+      <span>(내일 1건 · 기한 지남 2건 · 예정 3건)</span>
+    </div>
+    <p style="margin:0;color:var(--ink-soft)">화면 오른쪽 아래에 떠요. 누르면 마감요정 창이 열려요.</p>
+  </div>
+
+  <div class="panel tray">
+    <span class="big-ic">✕</span>
+    <div style="flex:1;min-width:240px">
+      <b style="font-size:20px">창을 닫아도 꺼지지 않아요</b><br>
+      <span style="color:var(--ink-soft);font-size:16px">작업표시줄 오른쪽 <span class="kbd">^</span> 안 요정 아이콘을 누르면 다시 열려요. 키보드로는 <span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">D</span>.<br>완전히 끄려면 요정 아이콘 <b>오른쪽 클릭 → 마감요정 종료</b>.</span>
+    </div>
+  </div>
+</section>
+
+<footer>마감요정 v1.6 · 마감 목록은 내 컴퓨터에만 저장돼요 (구글을 연결하면 할 일·캘린더에 올린 것만 내 구글 계정으로 가요)</footer>
+</div>
+</body>
+</html>

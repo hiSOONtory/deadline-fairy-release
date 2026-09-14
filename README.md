@@ -13,8 +13,8 @@
 
 | | |
 |---|---|
-| **설치·업데이트 안내서** | [그림으로 따라 하기](https://claude.ai/code/artifact/d8e1d86e-16bc-4e82-8238-cfcfc86abab3) |
-| **기능 설명서** | [버튼·카드가 뭘 하는지 보기](https://claude.ai/code/artifact/aadefb0f-f8d4-4ebb-a0e8-dcee9443dba4) |
+| **설치·업데이트 안내서** | [그림으로 따라 하기](https://hisoontory.github.io/deadline-fairy-release/install.html) |
+| **기능 설명서** | [버튼·카드가 뭘 하는지 보기](https://hisoontory.github.io/deadline-fairy-release/features.html) |
 
 두 설명서는 받은 파일 안에도 들어 있어요 (`마감요정_설명서.html`, `마감요정_기능설명서.html`).
 
