@@ -5,7 +5,7 @@
 
 ## ⬇ 받기
 
-### [👉 마감요정 v1.6 받기 (클릭하면 바로 내려받아져요)](https://github.com/hiSOONtory/deadline-fairy-release/releases/download/v1.6/deadline-fairy-v1.6.zip)
+### [👉 마감요정 받기 (최신 v1.6.1) (클릭하면 바로 내려받아져요)](https://github.com/hiSOONtory/deadline-fairy-release/releases/latest/download/deadline-fairy.zip)
 
 윈도우 PC용 · 약 52MB · 무료
 
